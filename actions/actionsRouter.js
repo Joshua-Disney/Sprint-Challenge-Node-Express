@@ -38,9 +38,9 @@ router.get("/:id", async (req, res) => {
 
 // Create new action
 router.post("/", async (req, res) => {
-  if (!req.body.notes || !req.body.description) {
+  if (!req.body.notes || !req.body.description || !req.body.project_id) {
     return res.status(422).json({
-      message: "notes and description required"
+      message: "notes, description, and project id required"
     });
   }
   try {
@@ -59,11 +59,6 @@ router.post("/", async (req, res) => {
 
 // Update an existing action
 router.put("/:id", async (req, res) => {
-  if (!req.body.notes || !req.body.description) {
-    return res.status(422).json({
-      message: "notes and description required"
-    });
-  }
   try {
     const action = await Actions.update(req.params.id, req.body);
     if (action) {
